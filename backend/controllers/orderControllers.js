@@ -1,16 +1,23 @@
 const asyncHandler = require("express-async-handler");
+const Orders = require("../modal/ordersModal");
 
 // Route api/orders
 const getOrders = asyncHandler(async (req, res) => {
+  const orders = await Orders.find();
+  res.status(200).json(orders);
+});
+// Route api/orders
+const createOrder = asyncHandler(async (req, res) => {
   if (!req.body.text) {
     res.status(400);
     throw new Error("Please add a text field");
   }
-  res.status(200).json({ message: "get orders" });
-});
-// Route api/orders
-const createOrder = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "create orders" });
+
+  const order = await Orders.create({
+    orderNo: req.body.orderNo,
+  });
+
+  res.status(200).json(order);
 });
 
 // Route api/orders:id
