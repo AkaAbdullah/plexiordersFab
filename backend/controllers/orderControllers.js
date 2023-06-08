@@ -6,9 +6,11 @@ const getOrders = asyncHandler(async (req, res) => {
   const orders = await Orders.find();
   res.status(200).json(orders);
 });
+
+//creating orders
 // Route api/orders
 const createOrder = asyncHandler(async (req, res) => {
-  if (!req.body.text) {
+  if (!req.body.orderNo) {
     res.status(400);
     throw new Error("Please add a text field");
   }

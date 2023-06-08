@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import ViewCompactAltIcon from "@mui/icons-material/ViewCompactAlt";
+import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
 
 export const SearchBox = () => {
@@ -27,7 +28,7 @@ export const SearchBox = () => {
           ;
         </CardContent>
         <CardActions>
-          <Button variant="contained" startIcon={<ViewCompactAltIcon />}>
+          <Button variant="contained" startIcon={<SearchIcon />}>
             Search Order
           </Button>
         </CardActions>

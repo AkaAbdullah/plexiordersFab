@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import ViewCompactAltIcon from "@mui/icons-material/ViewCompactAlt";
 import { useEffect, useState } from "react";
 import { InfinitySpin } from "react-loader-spinner";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function OrderCount() {
   const [count, setCount] = useState([]);
@@ -18,6 +19,9 @@ export default function OrderCount() {
       setLoader(false);
     }, 400);
   }, []);
+
+  const naviagate = useNavigate();
+
   return (
     <>
       <Card className="cardContainer" sx={{ minWidth: 275, maxWidth: 275 }}>
@@ -32,7 +36,11 @@ export default function OrderCount() {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="contained" startIcon={<ViewCompactAltIcon />}>
+          <Button
+            onClick={() => naviagate("/allorders")}
+            variant="contained"
+            startIcon={<ViewCompactAltIcon />}
+          >
             View Orders
           </Button>
         </CardActions>

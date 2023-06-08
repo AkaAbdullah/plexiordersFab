@@ -3,9 +3,9 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import ViewCompactAltIcon from "@mui/icons-material/ViewCompactAlt";
 import { useEffect, useState } from "react";
 import { InfinitySpin } from "react-loader-spinner";
+import QueryStatsIcon from "@mui/icons-material/QueryStats";
 
 export const TodaysOrders = () => {
   return (
@@ -18,7 +18,7 @@ export const TodaysOrders = () => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="contained" startIcon={<ViewCompactAltIcon />}>
+          <Button variant="contained" startIcon={<QueryStatsIcon />}>
             View Orders
           </Button>
         </CardActions>

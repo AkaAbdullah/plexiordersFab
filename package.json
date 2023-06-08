@@ -13,12 +13,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "mongoose": "^7.2.2"
   },
   "devDependencies": {
+    "concurrently": "^8.1.0",
     "nodemon": "^2.0.22"
   }
 }
