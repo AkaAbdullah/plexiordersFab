@@ -53,16 +53,18 @@ export const AllOrdersPage = () => {
                   </TableCell>
                   <TableCell align="center">{order.thickness}</TableCell>
                   <TableCell align="center">
-                    {order.lengthFractionValue}
+                    {order.lengthAndFractonValue}
                   </TableCell>
                   <TableCell align="center">
-                    {order.withFractionValue}
+                    {order.widthAndFractionValue}
                   </TableCell>
-                  <TableCell align="center">{order.diameter}</TableCell>
+                  <TableCell align="center">
+                    {order.diameterAndFractionValue}
+                  </TableCell>
                   <TableCell align="center">{order.quantity}</TableCell>
                   <TableCell align="center">{order.price}</TableCell>
                   <TableCell align="center">{order.tracking}</TableCell>
-                  <TableCell align="center">{order.date}</TableCell>
+                  <TableCell align="center">{order.createdAt}</TableCell>
                   <TableCell align="center">
                     <div className="tableButtons">
                       <Button size="small" variant="outlined">

@@ -17,6 +17,12 @@ const createOrder = asyncHandler(async (req, res) => {
 
   const order = await Orders.create({
     orderNo: req.body.orderNo,
+    marketPlaceOrderID: req.body.marketPlaceOrderID,
+    thickness: req.body.thickness,
+    lengthAndFractonValue: req.body.lengthAndFractonValue,
+    widthAndFractionValue: req.body.widthAndFractionValue,
+    diameterAndFractionValue: req.body.diameterAndFractionValue,
+    quantity: req.body.quantity,
   });
 
   res.status(200).json(order);

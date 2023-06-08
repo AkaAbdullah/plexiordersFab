@@ -8,7 +8,6 @@ const orderSchema = mongoose.Schema(
     },
     marketPlaceOrderID: {
       type: String,
-      required: true,
     },
     thickness: {
       type: String,
