@@ -42,4 +42,29 @@
 .tableButtons {
   display: flex;
   gap: 5px;
+  justify-content: center;
+  text-align: center;
+}
+
+.tableData {
+  text-align: center;
+}
+
+.modelCss {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-top: 0px;
+}
+.heading {
+  margin-top: -200px;
+}
+.modaltableData {
+  min-width: 900px;
+  margin-left: -200px;
+}
+.comments {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
 }

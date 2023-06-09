@@ -28,6 +28,20 @@ const createOrder = asyncHandler(async (req, res) => {
   res.status(200).json(order);
 });
 
+//GET req with parameters
+const getSingleOrder = asyncHandler(async (req, res) => {
+  try {
+    const item = await Orders.findById(req.params.id);
+    if (!item) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+    res.json(item);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // Route api/orders:id
 const updateOrder = asyncHandler(async (req, res) => {
   res.status(200).json({ message: `update order ${req.params.id}` });
@@ -43,4 +57,5 @@ module.exports = {
   createOrder,
   updateOrder,
   deleteOrder,
+  getSingleOrder,
 };
