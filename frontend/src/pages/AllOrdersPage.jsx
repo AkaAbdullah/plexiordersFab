@@ -40,7 +40,7 @@ export const AllOrdersPage = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/orders/${uid}`,
+        `https://tired-scarf-seal.cyclic.app/api/orders/${uid}`,
         formData
       );
       console.log(response.data); // Updated order data
@@ -88,9 +88,11 @@ export const AllOrdersPage = () => {
 
   useEffect(() => {
     console.log("working" + uid);
-    axios.get(`http://localhost:5000/api/orders/${uid}`).then((response) => {
-      setplaceholders(response.data);
-    });
+    axios
+      .get(`https://tired-scarf-seal.cyclic.app/api/orders/${uid}`)
+      .then((response) => {
+        setplaceholders(response.data);
+      });
   }, [uid]);
 
   const handleCloseEitModel = () => {
@@ -117,7 +119,7 @@ export const AllOrdersPage = () => {
 
   const handleOpen = (orderId) => {
     axios
-      .get(`http://localhost:5000/api/orders/${orderId}`)
+      .get(`https://tired-scarf-seal.cyclic.app/api/orders/${orderId}`)
       .then((response) => {
         setSingleItemData(response.data);
         setOpen(true);
@@ -186,7 +188,7 @@ export const AllOrdersPage = () => {
   }
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/orders")
+    fetch("https://tired-scarf-seal.cyclic.app/api/orders")
       .then((data) => data.json())
       .then((result) => setOrders(result));
   }, [editFormModal]);

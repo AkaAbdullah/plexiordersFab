@@ -48,7 +48,7 @@ export const TodaysOrdersPage = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/orders/${uid}`,
+        `https://tired-scarf-seal.cyclic.app/api/orders/${uid}`,
         formData
       );
       console.log(response.data); // Updated order data
@@ -96,9 +96,11 @@ export const TodaysOrdersPage = () => {
 
   useEffect(() => {
     console.log("working" + uid);
-    axios.get(`http://localhost:5000/api/orders/${uid}`).then((response) => {
-      setplaceholders(response.data);
-    });
+    axios
+      .get(`https://tired-scarf-seal.cyclic.app/api/orders/${uid}`)
+      .then((response) => {
+        setplaceholders(response.data);
+      });
   }, [uid]);
 
   const handleCloseEitModel = () => {
@@ -125,7 +127,7 @@ export const TodaysOrdersPage = () => {
 
   const handleOpen = (orderId) => {
     axios
-      .get(`http://localhost:5000/api/orders/${orderId}`)
+      .get(`https://tired-scarf-seal.cyclic.app/api/orders/${orderId}`)
       .then((response) => {
         setSingleItemData(response.data);
         setOpen(true);
@@ -169,7 +171,9 @@ export const TodaysOrdersPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/orders");
+        const response = await axios.get(
+          "https://tired-scarf-seal.cyclic.app/api/orders"
+        );
         const allOrders = response.data;
 
         const currentDate = new Date();

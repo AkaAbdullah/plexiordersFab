@@ -42,7 +42,7 @@ export const AddNewOrdersPage = () => {
   const createOrder = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/orders",
+        "https://tired-scarf-seal.cyclic.app/api/orders",
         {
           orderNo: formData.orderNo,
           marketPlaceOrderID: formData.marketPlaceOrderID,

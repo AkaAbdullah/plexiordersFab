@@ -33,7 +33,9 @@ export const TodaysOrders = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/orders");
+        const response = await axios.get(
+          "https://tired-scarf-seal.cyclic.app/api/orders"
+        );
         const allOrders = response.data;
 
         const currentDate = new Date();
