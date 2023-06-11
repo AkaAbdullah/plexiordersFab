@@ -1,4 +1,3 @@
-import React from "react";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { useState } from "react";
@@ -6,6 +5,7 @@ import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
 import toast, { Toaster } from "react-hot-toast";
+import NavBar from "../components/NavBar";
 
 export const AddNewOrdersPage = () => {
   const [formData, setFormData] = useState({
@@ -16,10 +16,12 @@ export const AddNewOrdersPage = () => {
     widthAndFractionValue: "",
     diameterAndFractionValue: "",
     quantity: "",
+    comments: "",
+    price: "",
+    tracking: "",
   });
   const [open, setOpen] = useState(false);
 
-  //Clearing out form Values after submiting form
   const notify = () => toast.success("Order Saved.");
   //Accesiig fom values
 
@@ -49,6 +51,9 @@ export const AddNewOrdersPage = () => {
           widthAndFractionValue: formData.widthAndFractionValue,
           diameterAndFractionValue: formData.diameterAndFractionValue,
           quantity: formData.quantity,
+          comments: formData.comments,
+          price: formData.price,
+          tracking: formData.tracking,
         },
         {
           headers: {
@@ -57,6 +62,19 @@ export const AddNewOrdersPage = () => {
         }
       );
       setOpen(false);
+      window.location.reload();
+      setFormData({
+        orderNo: "",
+        marketPlaceOrderID: "",
+        thickness: "",
+        lengthAndFractonValue: "",
+        widthAndFractionValue: "",
+        diameterAndFractionValue: "",
+        quantity: "",
+        comments: "",
+        tracking: "",
+        price: "",
+      });
       notify();
     } catch (error) {
       console.error("Error creating collection:", error);
@@ -65,76 +83,106 @@ export const AddNewOrdersPage = () => {
 
   return (
     <>
-      <div className="addNewOrdersPage">
-        <h1>Add new Orders</h1>
-      </div>
-
+      <NavBar />
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="orderForm">
-        <TextField
-          name="orderNo"
-          size="small"
-          label="Order No"
-          variant="outlined"
-          onChange={handleInputFields}
-        />
-        <TextField
-          name="marketPlaceOrderID"
-          size="small"
-          label="Market Place Order Id"
-          variant="outlined"
-          onChange={handleInputFields}
-        />
-        <TextField
-          name="thickness"
-          size="small"
-          label="Thickness"
-          variant="outlined"
-          onChange={handleInputFields}
-        />
-        <TextField
-          name="lengthAndFractonValue"
-          size="small"
-          label="Length & Fraction Value"
-          variant="outlined"
-          onChange={handleInputFields}
-        />
-        <TextField
-          name="widthAndFractionValue"
-          size="small"
-          label="Width & Fraction Value"
-          variant="outlined"
-          onChange={handleInputFields}
-        />
-        <TextField
-          name="diameterAndFractionValue"
-          size="small"
-          label="Diameter"
-          variant="outlined"
-          onChange={handleInputFields}
-        />
-        <TextField
-          name="quantity"
-          size="small"
-          label="Quantity"
-          variant="outlined"
-          onChange={handleInputFields}
-        />
-        <Button
-          type="submit"
-          onClick={handleSubmit}
-          style={{ minWidth: "227px" }}
-          size="large"
-          variant="contained"
-        >
-          Save Order Info
-        </Button>
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
+      <div className="mainORderDiv">
+        <div className="orderForm">
+          <h1>Add new Orders </h1>
+
+          <TextField
+            name="orderNo"
+            size="small"
+            label="Order No"
+            variant="outlined"
+            onChange={handleInputFields}
+          />
+          <TextField
+            name="marketPlaceOrderID"
+            size="small"
+            label="Market Place Order Id"
+            variant="outlined"
+            onChange={handleInputFields}
+          />
+          <TextField
+            name="thickness"
+            size="small"
+            label="Thickness"
+            variant="outlined"
+            onChange={handleInputFields}
+          />
+          <TextField
+            name="lengthAndFractonValue"
+            size="small"
+            label="Length & Fraction Value"
+            variant="outlined"
+            onChange={handleInputFields}
+          />
+          <TextField
+            name="widthAndFractionValue"
+            size="small"
+            label="Width & Fraction Value"
+            variant="outlined"
+            onChange={handleInputFields}
+          />
+
+          <TextField
+            name="diameterAndFractionValue"
+            size="small"
+            label="Diameter"
+            variant="outlined"
+            onChange={handleInputFields}
+          />
+          <TextField
+            name="quantity"
+            size="small"
+            label="Quantity"
+            variant="outlined"
+            onChange={handleInputFields}
+          />
+          <textarea
+            className="addordercommentbox"
+            placeholder="Comments"
+            label="Comments"
+            name="comments"
+            onChange={handleInputFields}
+          ></textarea>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            style={{ minWidth: "295px" }}
+            size="large"
+            variant="contained"
+          >
+            Save Order Info
+          </Button>
+
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        </div>
+        <div>
+          <div className="priceForm">
+            <h1>Update Tracking and Price</h1>
+            <p>Leave Empty if no Price or Tracking Number Avalible</p>
+            <TextField
+              name="price"
+              size="small"
+              label="Price"
+              variant="outlined"
+              onChange={handleInputFields}
+            />
+            <TextField
+              name="tracking"
+              size="small"
+              label="Tracking number"
+              variant="outlined"
+              onChange={handleInputFields}
+            />
+          </div>
+        </div>
       </div>
     </>
   );

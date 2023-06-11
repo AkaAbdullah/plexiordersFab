@@ -9,7 +9,26 @@ import TextField from "@mui/material/TextField";
 import NavBar from "../components/NavBar";
 import toast, { Toaster } from "react-hot-toast";
 
-export const AllOrdersPage = () => {
+const filterDataByDate = (data, currentDate) => {
+  const filteredData = data.filter((item) => {
+    const itemDate = new Date(item.createdAt);
+    const itemDateOnly = new Date(
+      itemDate.getFullYear(),
+      itemDate.getMonth(),
+      itemDate.getDate()
+    );
+    const currentDateOnly = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+    return itemDateOnly.getTime() === currentDateOnly.getTime();
+  });
+
+  return filteredData;
+};
+
+export const TodaysOrdersPage = () => {
   //this is the update popup modal here in this section
   const [editFormModal, setEditFormModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -23,17 +42,6 @@ export const AllOrdersPage = () => {
     tracking: "",
     comments: "",
   });
-
-  //searching logic
-  const [searchOrder, setSearchOrder] = useState("");
-
-  const handleSearch = () => {
-    const filteredOrders = orders.filter(
-      (order) => order.orderNo === searchOrder
-    );
-    console.log(filteredOrders);
-    setOrders(filteredOrders);
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -151,44 +159,29 @@ export const AllOrdersPage = () => {
   const [orders, setOrders] = useState([]);
   //PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 30;
+  const recordsPerPage = 15;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
   const records = orders.slice(firstIndex, lastIndex);
   const nPages = Math.ceil(orders.length / recordsPerPage);
-  let numbers = [];
-  if (nPages <= 7) {
-    numbers = Array.from({ length: nPages }, (_, index) => index + 1);
-  } else {
-    if (currentPage <= 4) {
-      numbers = [1, 2, 3, 4, 5, "...", nPages];
-    } else if (currentPage >= nPages - 3) {
-      numbers = [
-        1,
-        "...",
-        nPages - 4,
-        nPages - 3,
-        nPages - 2,
-        nPages - 1,
-        nPages,
-      ];
-    } else {
-      numbers = [
-        1,
-        "...",
-        currentPage - 1,
-        currentPage,
-        currentPage + 1,
-        "...",
-        nPages,
-      ];
-    }
-  }
+  const numbers = [...Array(nPages + 1).keys()].slice(1);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/orders")
-      .then((data) => data.json())
-      .then((result) => setOrders(result));
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/orders");
+        const allOrders = response.data;
+
+        const currentDate = new Date();
+        const filteredOrders = filterDataByDate(allOrders, currentDate);
+
+        setOrders(filteredOrders);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
+
+    fetchData();
   }, [editFormModal]);
 
   //Changing pages Link and naviation
@@ -212,19 +205,8 @@ export const AllOrdersPage = () => {
     <>
       <NavBar className="navPRo" />
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="searchboxxinput">
-        <h1 className="headingPageOrders">Plexi orders Details</h1>
-        <div className="ttt">
-          <h4>Search Order no</h4>
-          <input
-            onChange={(e) => setSearchOrder(e.target.value)}
-            className="searchbox"
-          ></input>
-          <button onClick={handleSearch} className="btn">
-            Search
-          </button>
-        </div>
-      </div>
+
+      <h1 className="headingPageOrders">Todays Plexi orders </h1>
       <div>
         <Modal
           open={editFormModal}
