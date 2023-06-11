@@ -3,11 +3,18 @@
   font-family: "Raleway", sans-serif;
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
 .cardContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  min-height: 120px;
 }
 
 .homeContainer {
@@ -18,17 +25,18 @@
   gap: 20px;
   flex-wrap: wrap;
 }
-.ordersPageMainDiv {
-  display: flex;
-  align-items: center;
+.headingPageOrders {
   text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  min-width: 500px;
 }
 
 .addNewOrdersPage {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .orderForm {
@@ -54,17 +62,161 @@
   display: flex;
   justify-content: start;
   align-items: center;
-  margin-top: 0px;
 }
 .heading {
   margin-top: -200px;
 }
 .modaltableData {
   min-width: 900px;
+  margin: auto;
+  align-items: start;
+  display: flex;
+  flex-direction: column;
   margin-left: -200px;
 }
 .comments {
   display: flex;
   align-items: start;
   flex-direction: column;
+  text-align: start;
+}
+.modelcenter {
+  display: flex;
+}
+.UpdateHeading {
+  margin-left: -90px;
+  margin-bottom: 20px;
+  min-width: 500px;
+  justify-content: center;
+}
+.updateForm {
+  min-width: 80px;
+  display: flex;
+  margin-left: -30px;
+  gap: 20px;
+
+  flex-direction: column;
+}
+
+.cmm {
+  min-height: 100px;
+}
+.addordercommentbox {
+  min-height: 150px;
+  min-width: 290px;
+}
+.mainDivAddOrderPage {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 20px;
+  justify-content: space-between;
+}
+.priceForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.mainORderDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 50px;
+}
+.logo {
+  width: 50px;
+  height: 50px;
+  mix-blend-mode: multiply;
+}
+
+.link {
+  text-decoration: none;
+  color: aliceblue;
+}
+.navPRo {
+  position: fixed;
+  overflow: hidden;
+}
+.search {
+  font-size: 25px;
+}
+.searchInput {
+  max-width: 260px;
+}
+
+.footer {
+  color: aliceblue;
+  background-color: rgb(182, 103, 206);
+
+  height: 200px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.navi {
+  background-color: rgb(182, 103, 206);
+}
+.searchboxxinput {
+  display: flex;
+  gap: 40%;
+  align-items: center;
+}
+
+.btn {
+  background-color: yellowgreen;
+  height: 40px;
+  margin-top: 10px;
+  width: 300px;
+  margin-bottom: 20px;
+}
+.ttt {
+  margin-top: 20px;
+}
+
+.btn:hover {
+  background-color: rgb(126, 126, 253);
+}
+.loginPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+  width: 400px;
+}
+
+.loginbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  max-width: 500px;
+}
+
+.loginbtn {
+  border: none;
+  border-radius: 5px;
+  min-width: 300px;
+  background-color: yellowgreen;
+  margin-bottom: 30px;
+  height: 50px;
+}
+.ggg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 240px;
+}
+.lfooter {
+  background-color: rgb(182, 103, 206);
+  color: aliceblue;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 200px;
 }

@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import ViewCompactAltIcon from "@mui/icons-material/ViewCompactAlt";
 import { useEffect, useState } from "react";
 import { InfinitySpin } from "react-loader-spinner";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderCount() {
   const [count, setCount] = useState([]);
@@ -15,9 +15,7 @@ export default function OrderCount() {
     fetch("http://localhost:5000/api/orders")
       .then((data) => data.json())
       .then((result) => setCount(result));
-    setTimeout(() => {
-      setLoader(false);
-    }, 400);
+    setLoader(false);
   }, []);
 
   const naviagate = useNavigate();

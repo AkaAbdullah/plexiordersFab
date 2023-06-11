@@ -12,21 +12,7 @@ export const AddNewOrders = () => {
     <>
       <Card className="cardContainer" sx={{ minWidth: 275, maxWidth: 275 }}>
         <CardContent>
-          <TypeAnimation
-            sequence={[
-              "Lets Add some", // Types 'One'
-              1000, // Waits 1s
-              "new Orders 😃", // Deletes 'One' and types 'Two'
-              2000, // Waits 2
-              () => {
-                console.log("Sequence completed");
-              },
-            ]}
-            wrapper="span"
-            cursor={true}
-            repeat={Infinity}
-            style={{ fontSize: "2em", display: "inline-block" }}
-          />
+          <h3>Add Orders</h3>
         </CardContent>
         <CardActions>
           <Button
