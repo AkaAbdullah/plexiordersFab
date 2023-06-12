@@ -4,6 +4,7 @@ import { HomePage } from "./pages/HomePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TodaysOrdersPage } from "./pages/TodaysOrdersPage";
 import { LoginPage } from "./pages/LoginPage";
+import { TestPage } from "./pages/TestPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/addneworders" element={<AddNewOrdersPage />} />
           <Route path="/todaysorders" element={<TodaysOrdersPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/test" element={<TestPage />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -107,6 +107,28 @@ const updateOrder = async (req, res) => {
   }
 };
 
+//controller for posting multiple orders in single time
+
+const createMultipleOrders = async (req, res) => {
+  try {
+    const orderNumbers = req.body.orderNumbers; // Assuming the textarea input field is named "orderNumbers" in the request body
+    // Split the input into an array of order numbers
+    const orderNumberArray = orderNumbers
+      .split("\n")
+      .filter((orderNo) => orderNo.trim() !== "");
+    // Create an array of objects to save in the database
+    const ordersToCreate = orderNumberArray.map((orderNo) => ({ orderNo }));
+
+    // Use Mongoose's insertMany to save the orders
+    const createdOrders = await Orders.insertMany(ordersToCreate);
+
+    res.status(201).json(createdOrders); // Return the created orders as a response
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 // Route api/orders:id
 const deleteOrder = asyncHandler(async (req, res) => {
   res.status(200).json({ message: `delete order ${req.params.id}` });
@@ -118,4 +140,5 @@ module.exports = {
   updateOrder,
   deleteOrder,
   getSingleOrder,
+  createMultipleOrders,
 };

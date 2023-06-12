@@ -8,6 +8,7 @@ import axios from "axios";
 import TextField from "@mui/material/TextField";
 import NavBar from "../components/NavBar";
 import toast, { Toaster } from "react-hot-toast";
+import { Oval } from "react-loader-spinner";
 
 const filterDataByDate = (data, currentDate) => {
   const filteredData = data.filter((item) => {
@@ -166,6 +167,16 @@ export const TodaysOrdersPage = () => {
   const nPages = Math.ceil(orders.length / recordsPerPage);
   const numbers = [...Array(nPages + 1).keys()].slice(1);
 
+  const [spinner, setSpinner] = useState(false);
+
+  useEffect(() => {
+    if (orders.length === 0) {
+      setSpinner(true);
+    } else {
+      setSpinner(false);
+    }
+  });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -319,6 +330,7 @@ export const TodaysOrdersPage = () => {
                   <th>Price</th>
                   <th>Tracking</th>
                 </thead>
+
                 <tbody>
                   {searchResult.map((order, i) => (
                     <tr key={i}>
@@ -365,6 +377,24 @@ export const TodaysOrdersPage = () => {
             <th>Date</th>
             <th>Action</th>
           </thead>
+          {spinner ? (
+            <div className="spiiner">
+              <Oval
+                height={100}
+                width={100}
+                color="#4fa94d"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#4fa94d"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
+            </div>
+          ) : (
+            " "
+          )}
           <tbody>
             {records.map((order, i) => (
               <tr key={i}>

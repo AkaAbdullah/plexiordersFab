@@ -52,7 +52,7 @@ export const TodaysOrders = () => {
   return (
     <>
       <div onClick={() => naviagate("/todaysorders")} className="boxButton">
-        <h3>Todays Orders</h3>
+        <h3>Todays Orders </h3>
         <h1>{lengthTodaysOrders}</h1>
       </div>
     </>

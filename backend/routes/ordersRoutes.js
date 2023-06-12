@@ -6,11 +6,14 @@ const {
   updateOrder,
   deleteOrder,
   getSingleOrder,
+  createMultipleOrders,
 } = require("../controllers/orderControllers");
 
 router.get("/", getOrders);
 
 router.post("/", createOrder);
+
+router.post("/mpo", createMultipleOrders);
 
 router.get("/:id", getSingleOrder);
 

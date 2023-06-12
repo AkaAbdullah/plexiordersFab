@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import { useEffect, useState } from "react";
-import logo from "../../public/download.png";
+import logo from "../../src/download.png";
 
 import { Link, useNavigate } from "react-router-dom";
 

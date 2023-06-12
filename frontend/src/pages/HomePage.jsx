@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar";
 import { Footer } from "../components/Footer";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ExperimentalBox } from "../components/ExperimentalBox";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -23,8 +24,8 @@ export const HomePage = () => {
       <div className="homeContainer">
         <AddNewOrders />
         <TodaysOrders />
-
         <OrderCount />
+        <ExperimentalBox />
       </div>
 
       <Footer />
