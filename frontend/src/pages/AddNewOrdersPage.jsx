@@ -88,6 +88,7 @@ export const AddNewOrdersPage = () => {
       <div className="mainORderDiv">
         <div className="orderForm">
           <h1>Add new Orders </h1>
+          <p>Rectangle & square Shapes </p>
 
           <TextField
             name="orderNo"
@@ -126,30 +127,17 @@ export const AddNewOrdersPage = () => {
           />
 
           <TextField
-            name="diameterAndFractionValue"
-            size="small"
-            label="Diameter"
-            variant="outlined"
-            onChange={handleInputFields}
-          />
-          <TextField
             name="quantity"
             size="small"
             label="Quantity"
             variant="outlined"
             onChange={handleInputFields}
           />
-          <textarea
-            className="addordercommentbox"
-            placeholder="Comments"
-            label="Comments"
-            name="comments"
-            onChange={handleInputFields}
-          ></textarea>
+
           <Button
             type="submit"
             onClick={handleSubmit}
-            style={{ minWidth: "295px" }}
+            style={{ minWidth: "220px" }}
             size="large"
             variant="contained"
           >
@@ -181,8 +169,19 @@ export const AddNewOrdersPage = () => {
               variant="outlined"
               onChange={handleInputFields}
             />
+            <h3>If the Order is Round Please add value here</h3>
+            <TextField
+              name="diameterAndFractionValue"
+              size="small"
+              label="Diameter & Fraction Value"
+              variant="outlined"
+              onChange={handleInputFields}
+            />
           </div>
         </div>
+      </div>
+      <div className="lfooter">
+        <h4> Fab Glass and Mirror &copy;</h4>
       </div>
     </>
   );

@@ -22,7 +22,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  gap: 20px;
+  gap: 30px;
   flex-wrap: wrap;
 }
 .headingPageOrders {
@@ -166,7 +166,9 @@ body {
   gap: 40%;
   align-items: center;
 }
-
+.searchbox {
+  min-width: 300px;
+}
 .btn {
   background-color: yellowgreen;
   height: 40px;
@@ -188,7 +190,13 @@ body {
   border: 1px solid red;
   width: 400px;
 }
-
+.spiiner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 650px;
+  margin-top: 50px;
+}
 .loginbox {
   display: flex;
   flex-direction: column;
@@ -219,4 +227,42 @@ body {
   display: flex;
   justify-content: center;
   height: 200px;
+  margin-top: 20px;
+}
+.boxButton {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  background-color: #76b5c5;
+  color: aliceblue;
+  align-items: center;
+  border-radius: 10px;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: -6px -1px 16px -7px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: -6px -1px 16px -7px rgba(0, 0, 0, 1);
+  -moz-box-shadow: -6px -1px 16px -7px rgba(0, 0, 0, 1);
+}
+.boxButton:hover {
+  cursor: pointer;
+  background-color: #063970;
+}
+
+.exp {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  background-color: #bb4314;
+  color: aliceblue;
+  align-items: center;
+  border-radius: 10px;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: -6px -1px 16px -7px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: -6px -1px 16px -7px rgba(0, 0, 0, 1);
+  -moz-box-shadow: -6px -1px 16px -7px rgba(0, 0, 0, 1);
+}
+.exp:hover {
+  cursor: pointer;
+  background-color: #063970;
 }

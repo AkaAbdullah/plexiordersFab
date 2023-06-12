@@ -1,6 +1,8 @@
 import { Button, TextareaAutosize } from "@mui/material";
 import React from "react";
 import { useState, useEffect } from "react";
+import { Oval } from "react-loader-spinner";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -10,6 +12,8 @@ import NavBar from "../components/NavBar";
 import toast, { Toaster } from "react-hot-toast";
 
 export const AllOrdersPage = () => {
+  //loaderspinner state
+  const [spinner, setSpinner] = useState(false);
   //this is the update popup modal here in this section
   const [editFormModal, setEditFormModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -148,6 +152,7 @@ export const AllOrdersPage = () => {
   };
 
   //state for API response
+
   const [orders, setOrders] = useState([]);
   //PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
@@ -184,7 +189,14 @@ export const AllOrdersPage = () => {
       ];
     }
   }
-
+  useEffect(() => {
+    if (orders.length === 0) {
+      setSpinner(true);
+    } else {
+      setSpinner(false);
+    }
+  });
+  //Fetching all orders data
   useEffect(() => {
     fetch("http://localhost:5000/api/orders")
       .then((data) => data.json())
@@ -383,6 +395,25 @@ export const AllOrdersPage = () => {
             <th>Date</th>
             <th>Action</th>
           </thead>
+          {spinner ? (
+            <div className="spiiner">
+              <Oval
+                height={100}
+                width={100}
+                color="#4fa94d"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#4fa94d"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
+            </div>
+          ) : (
+            " "
+          )}
+
           <tbody>
             {records.map((order, i) => (
               <tr key={i}>

@@ -4,14 +4,12 @@ const orderSchema = mongoose.Schema(
   {
     orderNo: {
       type: String,
-      required: true,
     },
     marketPlaceOrderID: {
       type: String,
     },
     thickness: {
       type: String,
-      required: true,
     },
     lengthAndFractonValue: {
       type: String,
@@ -24,7 +22,6 @@ const orderSchema = mongoose.Schema(
     },
     quantity: {
       type: String,
-      required: true,
     },
     price: {
       type: String,

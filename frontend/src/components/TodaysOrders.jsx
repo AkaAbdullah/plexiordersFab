@@ -1,12 +1,6 @@
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const filterDataByDate = (data, currentDate) => {
   const filteredData = data.filter((item) => {
@@ -29,6 +23,7 @@ const filterDataByDate = (data, currentDate) => {
 
 export const TodaysOrders = () => {
   const [todaysOrders, setTodaysOrders] = useState([]);
+  const naviagate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,21 +51,10 @@ export const TodaysOrders = () => {
 
   return (
     <>
-      <Card className="cardContainer" sx={{ minWidth: 275, maxWidth: 275 }}>
-        <CardContent>
-          <Typography sx={{ fontSize: 25 }}>Todays Order</Typography>
-          <Typography variant="h3" className="cardContainer">
-            <h2>{lengthTodaysOrders}</h2>
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Link to="/todaysorders">
-            <Button variant="contained" startIcon={<QueryStatsIcon />}>
-              View Orders
-            </Button>
-          </Link>
-        </CardActions>
-      </Card>
+      <div onClick={() => naviagate("/todaysorders")} className="boxButton">
+        <h3>Todays Orders </h3>
+        <h1>{lengthTodaysOrders}</h1>
+      </div>
     </>
   );
 };
