@@ -166,7 +166,9 @@ body {
   gap: 40%;
   align-items: center;
 }
-
+.searchbox {
+  min-width: 300px;
+}
 .btn {
   background-color: yellowgreen;
   height: 40px;
@@ -219,4 +221,23 @@ body {
   display: flex;
   justify-content: center;
   height: 200px;
+  margin-top: 20px;
+}
+.boxButton {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  background-color: #76b5c5;
+  color: aliceblue;
+  align-items: center;
+  border-radius: 10px;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: -6px -1px 16px -7px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: -6px -1px 16px -7px rgba(0, 0, 0, 1);
+  -moz-box-shadow: -6px -1px 16px -7px rgba(0, 0, 0, 1);
+}
+.boxButton:hover {
+  cursor: pointer;
+  background-color: #063970;
 }

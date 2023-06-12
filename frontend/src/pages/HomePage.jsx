@@ -21,10 +21,12 @@ export const HomePage = () => {
     <>
       <NavBar />
       <div className="homeContainer">
-        <OrderCount />
-        <TodaysOrders />
         <AddNewOrders />
+        <TodaysOrders />
+
+        <OrderCount />
       </div>
+
       <Footer />
     </>
   );

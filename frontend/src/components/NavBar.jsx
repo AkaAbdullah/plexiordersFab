@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import { useEffect, useState } from "react";
+import logo from "../../public/download.png";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -35,11 +36,7 @@ export default function NavBar() {
           <Toolbar className="navi">
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <Link className="link" to="/">
-                <img
-                  className="logo"
-                  src="https://pbs.twimg.com/profile_images/675581727859974144/vn-T4w2j_400x400.png"
-                  alt="example"
-                />
+                <img className="logo" src={logo} alt="example" />
               </Link>
               <Link className="link" to="/">
                 Fab Glass and Mirror
