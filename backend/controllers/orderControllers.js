@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Orders = require("../modal/ordersModal");
+const TestModal = require("../modal/testModal");
 
 // Route api/orders
 const getOrders = asyncHandler(async (req, res) => {
@@ -116,11 +117,13 @@ const createMultipleOrders = async (req, res) => {
     const orderNumberArray = orderNumbers
       .split("\n")
       .filter((orderNo) => orderNo.trim() !== "");
+
     // Create an array of objects to save in the database
     const ordersToCreate = orderNumberArray.map((orderNo) => ({ orderNo }));
+    console.log(ordersToCreate);
 
     // Use Mongoose's insertMany to save the orders
-    const createdOrders = await Orders.insertMany(ordersToCreate);
+    const createdOrders = await TestModal.insertMany(ordersToCreate);
 
     res.status(201).json(createdOrders); // Return the created orders as a response
   } catch (error) {
