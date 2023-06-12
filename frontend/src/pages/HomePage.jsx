@@ -6,6 +6,7 @@ import { Footer } from "../components/Footer";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ExperimentalBox } from "../components/ExperimentalBox";
+import { GenerateMultipleOrders } from "../components/GenerateMultipleOrders";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export const HomePage = () => {
         <AddNewOrders />
         <TodaysOrders />
         <OrderCount />
+        <GenerateMultipleOrders />
         <ExperimentalBox />
       </div>
 

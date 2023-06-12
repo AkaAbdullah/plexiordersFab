@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TodaysOrdersPage } from "./pages/TodaysOrdersPage";
 import { LoginPage } from "./pages/LoginPage";
 import { TestPage } from "./pages/TestPage";
+import { GenerateMultipleOrdersPage } from "./pages/GenerateMultipleOrdersPage";
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
           <Route path="/todaysorders" element={<TodaysOrdersPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/test" element={<TestPage />} />
+          <Route
+            path="/generateorders"
+            element={<GenerateMultipleOrdersPage />}
+          />
         </Routes>
       </BrowserRouter>
     </>
