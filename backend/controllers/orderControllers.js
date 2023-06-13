@@ -146,7 +146,7 @@ const deleteOrder = async (req, res) => {
     if (deletedOrder) {
       res
         .status(200)
-        .json({ message: `Deleted order with ID ${req.params.id}` });
+        .json({ message: `Deleted Order with ID ${req.params.id}` });
     } else {
       res.status(404).json({ message: "Order not found" });
     }
