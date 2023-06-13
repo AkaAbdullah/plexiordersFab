@@ -325,6 +325,12 @@ export const TodaysOrdersPage = () => {
     }
   };
 
+  const notify4 = () => toast.error("Feature not avalible yet");
+  // send email
+  const sendEmal = () => {
+    notify4();
+  };
+
   return (
     <>
       <NavBar className="navPRo" />
@@ -588,7 +594,9 @@ export const TodaysOrdersPage = () => {
         <Button variant="contained" onClick={() => generatePDF(orders)}>
           Generate PDF
         </Button>
-        <Button variant="contained">Send Email</Button>
+        <Button onClick={sendEmal} variant="contained">
+          Send Email
+        </Button>
       </div>
       <div className="lfooter">
         <h4> Fab Glass and Mirror &copy;</h4>

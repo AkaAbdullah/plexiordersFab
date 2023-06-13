@@ -27,7 +27,6 @@ export const HomePage = () => {
         <TodaysOrders />
         <OrderCount />
         <GenerateMultipleOrders />
-        <ExperimentalBox />
       </div>
 
       <Footer />
