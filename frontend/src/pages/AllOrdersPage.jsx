@@ -44,7 +44,7 @@ export const AllOrdersPage = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/orders/${uid}`,
+        `https://hilarious-pantsuit-elk.cyclic.app/api/orders/${uid}`,
         formData
       );
       console.log(response.data); // Updated order data
@@ -92,9 +92,11 @@ export const AllOrdersPage = () => {
 
   useEffect(() => {
     console.log("working" + uid);
-    axios.get(`http://localhost:5000/api/orders/${uid}`).then((response) => {
-      setplaceholders(response.data);
-    });
+    axios
+      .get(`https://hilarious-pantsuit-elk.cyclic.app/api/orders/${uid}`)
+      .then((response) => {
+        setplaceholders(response.data);
+      });
   }, [uid]);
 
   const handleCloseEitModel = () => {
@@ -121,7 +123,7 @@ export const AllOrdersPage = () => {
 
   const handleOpen = (orderId) => {
     axios
-      .get(`http://localhost:5000/api/orders/${orderId}`)
+      .get(`https://hilarious-pantsuit-elk.cyclic.app/api/orders/${orderId}`)
       .then((response) => {
         setSingleItemData(response.data);
         setOpen(true);
@@ -198,7 +200,7 @@ export const AllOrdersPage = () => {
   });
   //Fetching all orders data
   useEffect(() => {
-    fetch("http://localhost:5000/api/orders")
+    fetch("https://hilarious-pantsuit-elk.cyclic.app/api/orders/")
       .then((data) => data.json())
       .then((result) => setOrders(result));
   }, [editFormModal]);

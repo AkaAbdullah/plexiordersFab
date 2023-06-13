@@ -6,7 +6,7 @@ export default function OrderCount() {
   const [count, setCount] = useState([]);
   const [loader, setLoader] = useState(true);
   useEffect(() => {
-    fetch("http://localhost:5000/api/orders")
+    fetch("https://hilarious-pantsuit-elk.cyclic.app/api/orders/")
       .then((data) => data.json())
       .then((result) => setCount(result));
     setLoader(false);

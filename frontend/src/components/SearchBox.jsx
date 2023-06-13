@@ -29,7 +29,7 @@ export const SearchBox = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/orders/")
+      .get("https://hilarious-pantsuit-elk.cyclic.app/api/orders/")
       .then((response) => {
         setOrders(response.data);
       })

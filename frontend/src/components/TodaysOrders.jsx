@@ -28,7 +28,9 @@ export const TodaysOrders = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/orders");
+        const response = await axios.get(
+          "https://hilarious-pantsuit-elk.cyclic.app/api/orders/"
+        );
         const allOrders = response.data;
 
         const currentDate = new Date();
