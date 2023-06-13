@@ -32,7 +32,7 @@ export const GenerateMultipleOrdersPage = () => {
         );
         notify();
         console.log(response);
-        // navigate("/todaysorders");
+        navigate("/");
       } catch (error) {
         notify2();
         console.error(error.response);
