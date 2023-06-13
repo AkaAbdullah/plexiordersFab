@@ -64,10 +64,8 @@ export const AllOrdersPage = () => {
     transform: "translate(-50%, -50%)",
     width: "40%",
     bgcolor: "background.paper",
-    border: "1px solid #000",
     boxShadow: 24,
-    p: 20,
-    textAlign: "center",
+    p: 10,
   };
 
   const handleInputFields = (e) => {
@@ -221,6 +219,26 @@ export const AllOrdersPage = () => {
     setCurrentPage(id);
   }
   const notify = () => toast.success("Order Saved.");
+  const notify2 = () => toast.success("order deleted Sucessfully");
+  const notify3 = () => toast.error("Failed To Delete Order");
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `https://hilarious-pantsuit-elk.cyclic.app/api/orders/${uid}`
+      );
+      if (response.status === 200) {
+        console.log(response.data.message); // Success message
+        // Perform any additional actions after successful deletion
+        setEditFormModal(false);
+        notify2();
+      } else {
+        console.log("Failed to delete order");
+        notify3();
+      }
+    } catch (error) {
+      console.error(" error occurred:", error);
+    }
+  };
 
   return (
     <>
@@ -247,9 +265,7 @@ export const AllOrdersPage = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style2}>
-            <h4 className="UpdateHeading">
-              Update Order : {placeholders.orderNo}
-            </h4>
+            <h4>Update Order : {placeholders.orderNo}</h4>
             <div>
               <form className="updateForm" onSubmit={handleSubmit}>
                 <TextField
@@ -321,10 +337,18 @@ export const AllOrdersPage = () => {
                 <Button
                   type="submit"
                   style={{ minWidth: "227px" }}
-                  size="large"
+                  size="small"
                   variant="contained"
                 >
                   Update Order Info
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleDelete}
+                  color="error"
+                  size="small"
+                >
+                  Delete Order
                 </Button>
               </form>
             </div>

@@ -39,7 +39,7 @@ export default function NavBar() {
                 <img className="logo" src={logo} alt="example" />
               </Link>
               <Link className="link" to="/">
-                Fab Glass and Mirror
+                Plexiglass orders
               </Link>
             </Typography>
 

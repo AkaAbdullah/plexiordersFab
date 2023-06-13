@@ -304,6 +304,7 @@ export const TodaysOrdersPage = () => {
 
   // DeleteORder
   const notify2 = () => toast.success("Order Deleted Sucessfully.");
+  const notify3 = () => toast.error("Failed To Delete Order");
 
   const handleDelete = async () => {
     try {
@@ -317,6 +318,7 @@ export const TodaysOrdersPage = () => {
         notify2();
       } else {
         console.log("Failed to delete order");
+        notify3();
       }
     } catch (error) {
       console.error(" error occurred:", error);
@@ -418,9 +420,10 @@ export const TodaysOrdersPage = () => {
                     Update Order Info
                   </Button>
                   <Button
-                    onClick={handleDelete}
-                    size="small"
                     variant="contained"
+                    onClick={handleDelete}
+                    color="error"
+                    size="small"
                   >
                     Delete Order
                   </Button>
