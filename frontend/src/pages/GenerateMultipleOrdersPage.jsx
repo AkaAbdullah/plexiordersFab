@@ -21,7 +21,7 @@ export const GenerateMultipleOrdersPage = () => {
     if (orderNumbers.length != 0) {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/orders/mpo",
+          "https://hilarious-pantsuit-elk.cyclic.app/api/orders/mpo",
           { orderNumbers },
           {
             headers: {
@@ -31,7 +31,8 @@ export const GenerateMultipleOrdersPage = () => {
           }
         );
         notify();
-        navigate("/todaysorders");
+        console.log(response);
+        // navigate("/todaysorders");
       } catch (error) {
         notify2();
         console.error(error.response);

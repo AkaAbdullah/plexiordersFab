@@ -123,7 +123,7 @@ const createMultipleOrders = async (req, res) => {
     console.log(ordersToCreate);
 
     // Use Mongoose's insertMany to save the orders
-    const createdOrders = await TestModal.insertMany(ordersToCreate);
+    const createdOrders = await Orders.insertMany(ordersToCreate);
 
     res.status(201).json(createdOrders); // Return the created orders as a response
   } catch (error) {
