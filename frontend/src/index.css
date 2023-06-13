@@ -83,23 +83,15 @@ body {
 .modelcenter {
   display: flex;
 }
-.UpdateHeading {
-  margin-left: -90px;
-  margin-bottom: 20px;
-  min-width: 500px;
-  justify-content: center;
-}
-.updateForm {
-  min-width: 80px;
-  display: flex;
-  margin-left: -30px;
-  gap: 20px;
 
+.updateForm {
+  display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 
 .cmm {
-  min-height: 100px;
+  min-height: 50px;
 }
 .addordercommentbox {
   min-height: 150px;
@@ -151,7 +143,6 @@ body {
   background-color: rgb(182, 103, 206);
 
   height: 200px;
-  position: fixed;
   bottom: 0;
   width: 100%;
   display: flex;
@@ -280,4 +271,18 @@ body {
 .rr {
   background-color: red;
   color: white;
+}
+.emailcontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 300px;
+}
+.btn2 {
+  width: 200px;
+  background-color: #76b5c5;
+  border: none;
+  border-radius: 5px;
+  height: 30px;
 }

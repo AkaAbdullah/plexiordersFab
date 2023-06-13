@@ -47,7 +47,7 @@ const getSingleOrder = asyncHandler(async (req, res) => {
 });
 
 // Route api/orders:id
-
+//Putrequest update
 const updateOrder = async (req, res) => {
   const { id } = req.params; // Extract the order ID from the request parameters
   const updateFields = {};
@@ -55,6 +55,9 @@ const updateOrder = async (req, res) => {
   // Add the fields to be updated to the updateFields object
   if (req.body.orderNo) {
     updateFields.orderNo = req.body.orderNo;
+  }
+  if (req.body.marketPlaceOrderID) {
+    updateFields.marketPlaceOrderID = req.body.marketPlaceOrderID;
   }
   if (req.body.thickness) {
     updateFields.thickness = req.body.thickness;
@@ -133,10 +136,24 @@ const createMultipleOrders = async (req, res) => {
 };
 
 // Route api/orders:id
-const deleteOrder = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `delete order ${req.params.id}` });
-});
+//Delete order
+const deleteOrder = async (req, res) => {
+  try {
+    // Perform deletion logic here
+    // Assuming you have a database and the order to be deleted is identified by req.params.id
+    const deletedOrder = await Orders.findByIdAndDelete(req.params.id);
 
+    if (deletedOrder) {
+      res
+        .status(200)
+        .json({ message: `Deleted order with ID ${req.params.id}` });
+    } else {
+      res.status(404).json({ message: "Order not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 module.exports = {
   getOrders,
   createOrder,

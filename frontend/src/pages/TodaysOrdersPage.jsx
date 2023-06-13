@@ -9,6 +9,8 @@ import TextField from "@mui/material/TextField";
 import NavBar from "../components/NavBar";
 import toast, { Toaster } from "react-hot-toast";
 import { Oval } from "react-loader-spinner";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const filterDataByDate = (data, currentDate) => {
   const filteredData = data.filter((item) => {
@@ -34,6 +36,7 @@ export const TodaysOrdersPage = () => {
   const [editFormModal, setEditFormModal] = useState(false);
   const [formData, setFormData] = useState({
     orderNo: "",
+    marketPlaceOrderID: "",
     thickness: "",
     lengthAndFractonValue: "",
     widthAndFractionValue: "",
@@ -69,10 +72,8 @@ export const TodaysOrdersPage = () => {
     transform: "translate(-50%, -50%)",
     width: "40%",
     bgcolor: "background.paper",
-    border: "1px solid #000",
     boxShadow: 24,
-    p: 20,
-    textAlign: "center",
+    p: 10,
   };
 
   const handleInputFields = (e) => {
@@ -216,6 +217,112 @@ export const TodaysOrdersPage = () => {
   }
   const notify = () => toast.success("Order Saved.");
 
+  //Genrating PDF code
+  const generatePDF = (orders) => {
+    const doc = new jsPDF();
+    const tableData = [];
+    const tableHeaders = [
+      "Order No",
+      "Thickness",
+      "Length & Fr Value",
+      "Width & Fr Value",
+      "Diameter & Fr Value",
+      "Quantity",
+    ];
+
+    // Prepare the table data
+    orders.forEach((item) => {
+      const rowData = [
+        item.orderNo,
+        item.thickness,
+        item.lengthAndFractonValue,
+        item.widthAndFractionValue,
+        item.diameterAndFractionValue,
+        item.quantity,
+      ];
+      tableData.push(rowData);
+    });
+
+    const text = "Plexiglass Orders Details ";
+    const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const xPos = (pageWidth - textWidth) / 2;
+    const yPos = 15;
+    doc.line(14, 30, 196, 30);
+    doc.line(14, 45, 196, 45);
+
+    doc.setFontSize(16);
+    doc.text(text, 14, 40);
+    //Getting Current Date
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const day = String(currentDate.getDate()).padStart(2, "0");
+
+    const formattedDate = `${day}-${month}-${year}`;
+    doc.text(formattedDate, 167, 40);
+
+    //table design
+    const tableWidth = 180;
+    const startX = (pageWidth - tableWidth) / 2;
+    const startY = yPos + 40;
+
+    doc.autoTable({
+      head: [tableHeaders],
+      body: tableData,
+
+      // columnStyles: {
+      //   0: { cellWidth: 30 },
+      //   1: { cellWidth: 30 },
+      //   2: { cellWidth: 40 },
+      //   3: { cellWidth: 40 },
+      //   4: { cellWidth: 40 },
+      //   5: { cellWidth: 20 },
+      // },
+      startY: startY,
+      startX: startX,
+    });
+
+    const tableHeadersHeight = 10; // Height of the table headers
+    const tableRowHeight = 12; // Height of each table row
+    const tableDataHeight = tableData.length * tableRowHeight;
+    const tableTotalHeight = tableHeadersHeight + tableDataHeight;
+    const tableEndY = startY + tableTotalHeight;
+    const textX = startX;
+    const textY = tableEndY + 10;
+    const warningTextFontSize = 10;
+    const webLink = "https://fabplexiorders.netlify.app";
+    const warningText =
+      "This is Electronically generated PDF Please Review orders Carefully ";
+    doc.setFontSize(warningTextFontSize);
+    doc.text(warningText, textX, textY);
+    doc.setFontSize(warningTextFontSize);
+
+    doc.text(webLink, textX, textY + 5);
+    doc.save("plexiorders " + formattedDate);
+  };
+
+  // DeleteORder
+  const notify2 = () => toast.success("Order Deleted Sucessfully.");
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `https://hilarious-pantsuit-elk.cyclic.app/api/orders/${uid}`
+      );
+      if (response.status === 200) {
+        console.log(response.data.message); // Success message
+        // Perform any additional actions after successful deletion
+        setEditFormModal(false);
+        notify2();
+      } else {
+        console.log("Failed to delete order");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
   return (
     <>
       <NavBar className="navPRo" />
@@ -230,86 +337,95 @@ export const TodaysOrdersPage = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style2}>
-            <h4 className="UpdateHeading">
-              Update Order : {placeholders.orderNo}
-            </h4>
+            <h4>Update Order : {placeholders.orderNo}</h4>
             <div>
-              <form className="updateForm" onSubmit={handleSubmit}>
-                <TextField
-                  name="orderNo"
-                  size="small"
-                  label={placeholders.orderNo}
-                  variant="outlined"
-                  onChange={handleInputFields}
-                />
-                <TextField
-                  name="thickness"
-                  size="small"
-                  label={`Thickness ${placeholders.thickness}`}
-                  variant="outlined"
-                  onChange={handleInputFields}
-                />
-                <TextField
-                  name="lengthAndFractonValue"
-                  size="small"
-                  label={`Length and Fraction Value ${placeholders.lengthAndFractonValue}`}
-                  variant="outlined"
-                  onChange={handleInputFields}
-                />
-                <TextField
-                  name="widthAndFractionValue"
-                  size="small"
-                  label={`Width and Fraction Value ${placeholders.widthAndFractionValue}`}
-                  variant="outlined"
-                  onChange={handleInputFields}
-                />
-                <TextField
-                  name="diameterAndFractionValue"
-                  size="small"
-                  label={`Diameter and Fraction Value ${placeholders.diameterAndFractionValue}`}
-                  variant="outlined"
-                  onChange={handleInputFields}
-                />
-                <TextField
-                  name="quantity"
-                  size="small"
-                  label={`Quantity  ${placeholders.quantity}`}
-                  variant="outlined"
-                  onChange={handleInputFields}
-                />
-                <TextField
-                  name="price"
-                  size="small"
-                  label={`Price  ${placeholders.price}`}
-                  variant="outlined"
-                  onChange={handleInputFields}
-                />
-                <TextField
-                  name="tracking"
-                  size="small"
-                  label={`Tracking  ${placeholders.tracking}`}
-                  variant="outlined"
-                  onChange={handleInputFields}
-                />
+              <div className="updateDiv">
+                <form className="updateForm" onSubmit={handleSubmit}>
+                  <TextField
+                    name="orderNo"
+                    size="small"
+                    label={placeholders.orderNo}
+                    variant="outlined"
+                    onChange={handleInputFields}
+                  />
+                  <TextField
+                    name="marketPlaceOrderID"
+                    size="small"
+                    label="Market Place Order ID"
+                    variant="outlined"
+                    onChange={handleInputFields}
+                  />
+                  <TextField
+                    name="thickness"
+                    size="small"
+                    label={`Thickness ${placeholders.thickness}`}
+                    variant="outlined"
+                    onChange={handleInputFields}
+                  />
+                  <TextField
+                    name="lengthAndFractonValue"
+                    size="small"
+                    label={`Length and Fraction Value ${placeholders.lengthAndFractonValue}`}
+                    variant="outlined"
+                    onChange={handleInputFields}
+                  />
+                  <TextField
+                    name="widthAndFractionValue"
+                    size="small"
+                    label={`Width and Fraction Value ${placeholders.widthAndFractionValue}`}
+                    variant="outlined"
+                    onChange={handleInputFields}
+                  />
+                  <TextField
+                    name="diameterAndFractionValue"
+                    size="small"
+                    label={`Diameter and Fraction Value ${placeholders.diameterAndFractionValue}`}
+                    variant="outlined"
+                    onChange={handleInputFields}
+                  />
+                  <TextField
+                    name="quantity"
+                    size="small"
+                    label={`Quantity  ${placeholders.quantity}`}
+                    variant="outlined"
+                    onChange={handleInputFields}
+                  />
+                  <TextField
+                    name="price"
+                    size="small"
+                    label={`Price  ${placeholders.price}`}
+                    variant="outlined"
+                    onChange={handleInputFields}
+                  />
+                  <TextField
+                    name="tracking"
+                    size="small"
+                    label={`Tracking  ${placeholders.tracking}`}
+                    variant="outlined"
+                    onChange={handleInputFields}
+                  />
 
-                <TextareaAutosize
-                  className="cmm"
-                  placeholder="Comments"
-                  name="comments"
-                  size="small"
-                  label={placeholders.comments}
-                  variant="outlined"
-                  onChange={handleInputFields}
-                />
-                <Button
-                  type="submit"
-                  style={{ minWidth: "227px" }}
-                  size="large"
-                  variant="contained"
-                >
-                  Update Order Info
-                </Button>
-              </form>
+                  <TextareaAutosize
+                    className="cmm"
+                    placeholder="Comments"
+                    name="comments"
+                    size="small"
+                    label={placeholders.comments}
+                    variant="outlined"
+                    onChange={handleInputFields}
+                  />
+                  <Button type="submit" size="small" variant="contained">
+                    Update Order Info
+                  </Button>
+                  <Button
+                    onClick={handleDelete}
+                    size="small"
+                    variant="contained"
+                  >
+                    Delete Order
+                  </Button>
+                </form>
+              </div>
             </div>
           </Box>
         </Modal>
@@ -464,6 +580,12 @@ export const TodaysOrdersPage = () => {
             </li>
           </ul>
         </nav>
+      </div>
+      <div className="emailcontainer">
+        <Button variant="contained" onClick={() => generatePDF(orders)}>
+          Generate PDF
+        </Button>
+        <Button variant="contained">Send Email</Button>
       </div>
       <div className="lfooter">
         <h4> Fab Glass and Mirror &copy;</h4>
