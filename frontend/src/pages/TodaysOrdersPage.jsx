@@ -14,23 +14,22 @@ import "jspdf-autotable";
 
 const addLineNumbersToDuplicates = (orders) => {
   return new Promise((resolve) => {
-    const orderCounts = {};
+    const orderNoMap = new Map(); // Map to track duplicate orderNo values
     const result = [];
 
-    for (const order of orders) {
+    orders.forEach((order) => {
       const orderNo = order.orderNo;
 
-      if (orderNo in orderCounts) {
-        orderCounts[orderNo]++;
-        result.push({
-          ...order,
-          orderNo: `${orderNo} Line ${orderCounts[orderNo]}`,
-        });
+      if (orderNoMap.has(orderNo)) {
+        // If orderNo already exists, mark it as a duplicate
+        order.isDuplicate = true;
       } else {
-        orderCounts[orderNo] = 1;
-        result.push(order);
+        orderNoMap.set(orderNo, true); // Add orderNo to the map
+        order.isDuplicate = false;
       }
-    }
+
+      result.push(order);
+    });
 
     resolve(result);
   });
@@ -246,87 +245,112 @@ export const TodaysOrdersPage = () => {
   // Define and initialize the orders variable
 
   const generatePDF = async () => {
-    addLineNumbersToDuplicates(orders)
-      .then((modified) => {
-        const doc = new jsPDF();
-        const tableData = [];
-        const tableHeaders = [
-          "Order No",
-          "Thickness",
-          "Length & Fr Value",
-          "Width & Fr Value",
-          "Diameter & Fr Value",
-          "Quantity",
-        ];
+    const modified = await addLineNumbersToDuplicates(orders);
 
-        // Prepare the table data
-        modified.forEach((item) => {
-          const rowData = [
-            item.orderNo,
-            item.thickness,
-            item.lengthAndFractonValue,
-            item.widthAndFractionValue,
-            item.diameterAndFractionValue,
-            item.quantity,
-          ];
-          tableData.push(rowData);
-        });
+    const doc = new jsPDF();
+    const tableData = [];
+    const tableHeaders = [
+      "Order No",
+      "Thickness",
+      "Length & Fr Value",
+      "Width & Fr Value",
+      "Diameter & Fr Value",
+      "Quantity",
+    ];
 
-        const text = "Plexiglass Orders Details ";
-        const textWidth =
-          doc.getStringUnitWidth(text) * doc.internal.getFontSize();
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const xPos = (pageWidth - textWidth) / 2;
-        const yPos = 15;
-        doc.line(14, 30, 196, 30);
-        doc.line(14, 45, 196, 45);
+    // Prepare the table data
+    const orderNoMap = new Map(); // Map to track duplicate orderNo values
+    modified.forEach((item) => {
+      const rowData = [
+        item.orderNo,
+        item.thickness,
+        item.lengthAndFractonValue,
+        item.widthAndFractionValue,
+        item.diameterAndFractionValue,
+        item.quantity,
+      ];
 
-        doc.setFontSize(16);
-        doc.text(text, 14, 40);
-        //Getting Current Date
-        const currentDate = new Date();
-        const year = currentDate.getFullYear();
-        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-        const day = String(currentDate.getDate()).padStart(2, "0");
+      if (orderNoMap.has(item.orderNo)) {
+        // If orderNo already exists, mark it as a duplicate
+        orderNoMap.get(item.orderNo).isDuplicate = true;
+        item.isDuplicate = true; // Mark the duplicate row as highlighted
+      } else {
+        orderNoMap.set(item.orderNo, item); // Add orderNo and original row to the map
+        item.isDuplicate = false;
+      }
 
-        const formattedDate = `${day}-${month}-${year}`;
-        doc.text(formattedDate, 167, 40);
+      tableData.push(rowData);
+    });
 
-        //table design
-        const tableWidth = 180;
-        const startX = (pageWidth - tableWidth) / 2;
-        const startY = yPos + 40;
+    // Highlight the duplicate OrderNo
+    modified.forEach((item) => {
+      if (item.isDuplicate) {
+        const rowIndex = tableData.findIndex(
+          (rowData) => rowData[0] === item.orderNo
+        );
 
-        doc.autoTable({
-          head: [tableHeaders],
-          body: tableData,
-          startY: startY,
-          startX: startX,
-        });
+        if (rowIndex !== -1) {
+          const rowData = tableData[rowIndex];
+          rowData[0] = {
+            content: rowData[0],
+            styles: {
+              fillColor: "#ffcc00", // Set the fill color to yellow
+            },
+          };
+        }
+      }
+    });
 
-        const tableHeadersHeight = 10; // Height of the table headers
-        const tableRowHeight = 12; // Height of each table row
-        const tableDataHeight = tableData.length * tableRowHeight;
-        const tableTotalHeight = tableHeadersHeight + tableDataHeight;
-        const tableEndY = startY + tableTotalHeight;
-        const textX = startX;
-        const textY = tableEndY + 10;
-        const warningTextFontSize = 10;
-        const webLink = "https://fabplexiorders.netlify.app";
-        const warningText =
-          "This is Electronically generated PDF. Please review orders carefully.";
-        doc.setFontSize(warningTextFontSize);
-        doc.text(warningText, textX, textY);
-        doc.setFontSize(warningTextFontSize);
+    const text = "Plexiglass Orders Details ";
+    const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const xPos = (pageWidth - textWidth) / 2;
+    const yPos = 15;
+    doc.line(14, 30, 196, 30);
+    doc.line(14, 45, 196, 45);
 
-        doc.text(webLink, textX, textY + 5);
-        doc.save("plexiorders " + formattedDate);
-      })
-      .catch((error) => {
-        // Handle any errors that occur during the Promise execution
-        console.error(error);
-      });
+    doc.setFontSize(16);
+    doc.text(text, 14, 40);
+    //Getting Current Date
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const day = String(currentDate.getDate()).padStart(2, "0");
+
+    const formattedDate = `${day}-${month}-${year}`;
+    doc.text(formattedDate, 167, 40);
+
+    //table design
+    const tableWidth = 180;
+    const startX = (pageWidth - tableWidth) / 2;
+    const startY = yPos + 40;
+
+    doc.autoTable({
+      head: [tableHeaders],
+      body: tableData,
+      startY: startY,
+      startX: startX,
+    });
+
+    const tableHeadersHeight = 10; // Height of the table headers
+    const tableRowHeight = 12; // Height of each table row
+    const tableDataHeight = tableData.length * tableRowHeight;
+    const tableTotalHeight = tableHeadersHeight + tableDataHeight;
+    const tableEndY = startY + tableTotalHeight;
+    const textX = startX;
+    const textY = tableEndY + 10;
+    const warningTextFontSize = 10;
+    const webLink = "https://fabplexiorders.netlify.app";
+    const warningText =
+      "This is Electronically generated PDF. Please review orders carefully.";
+    doc.setFontSize(warningTextFontSize);
+    doc.text(warningText, textX, textY);
+    doc.setFontSize(warningTextFontSize);
+
+    doc.text(webLink, textX, textY + 5);
+    doc.save("plexiorders " + formattedDate);
   };
+
   // DeleteORder
   const notify2 = () => toast.success("Order Deleted Sucessfully.");
   const notify3 = () => toast.error("Failed To Delete Order");
