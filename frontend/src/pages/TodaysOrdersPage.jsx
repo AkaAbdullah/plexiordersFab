@@ -12,6 +12,30 @@ import { Oval } from "react-loader-spinner";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
+const addLineNumbersToDuplicates = (orders) => {
+  return new Promise((resolve) => {
+    const orderCounts = {};
+    const result = [];
+
+    for (const order of orders) {
+      const orderNo = order.orderNo;
+
+      if (orderNo in orderCounts) {
+        orderCounts[orderNo]++;
+        result.push({
+          ...order,
+          orderNo: `${orderNo} Line ${orderCounts[orderNo]}`,
+        });
+      } else {
+        orderCounts[orderNo] = 1;
+        result.push(order);
+      }
+    }
+
+    resolve(result);
+  });
+};
+
 const filterDataByDate = (data, currentDate) => {
   const filteredData = data.filter((item) => {
     const itemDate = new Date(item.createdAt);
@@ -218,90 +242,91 @@ export const TodaysOrdersPage = () => {
   const notify = () => toast.success("Order Saved.");
 
   //Genrating PDF code
-  const generatePDF = (orders) => {
-    const doc = new jsPDF();
-    const tableData = [];
-    const tableHeaders = [
-      "Order No",
-      "Thickness",
-      "Length & Fr Value",
-      "Width & Fr Value",
-      "Diameter & Fr Value",
-      "Quantity",
-    ];
 
-    // Prepare the table data
-    orders.forEach((item) => {
-      const rowData = [
-        item.orderNo,
-        item.thickness,
-        item.lengthAndFractonValue,
-        item.widthAndFractionValue,
-        item.diameterAndFractionValue,
-        item.quantity,
-      ];
-      tableData.push(rowData);
-    });
+  // Define and initialize the orders variable
 
-    const text = "Plexiglass Orders Details ";
-    const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const xPos = (pageWidth - textWidth) / 2;
-    const yPos = 15;
-    doc.line(14, 30, 196, 30);
-    doc.line(14, 45, 196, 45);
+  const generatePDF = async () => {
+    addLineNumbersToDuplicates(orders)
+      .then((modified) => {
+        const doc = new jsPDF();
+        const tableData = [];
+        const tableHeaders = [
+          "Order No",
+          "Thickness",
+          "Length & Fr Value",
+          "Width & Fr Value",
+          "Diameter & Fr Value",
+          "Quantity",
+        ];
 
-    doc.setFontSize(16);
-    doc.text(text, 14, 40);
-    //Getting Current Date
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-    const day = String(currentDate.getDate()).padStart(2, "0");
+        // Prepare the table data
+        modified.forEach((item) => {
+          const rowData = [
+            item.orderNo,
+            item.thickness,
+            item.lengthAndFractonValue,
+            item.widthAndFractionValue,
+            item.diameterAndFractionValue,
+            item.quantity,
+          ];
+          tableData.push(rowData);
+        });
 
-    const formattedDate = `${day}-${month}-${year}`;
-    doc.text(formattedDate, 167, 40);
+        const text = "Plexiglass Orders Details ";
+        const textWidth =
+          doc.getStringUnitWidth(text) * doc.internal.getFontSize();
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const xPos = (pageWidth - textWidth) / 2;
+        const yPos = 15;
+        doc.line(14, 30, 196, 30);
+        doc.line(14, 45, 196, 45);
 
-    //table design
-    const tableWidth = 180;
-    const startX = (pageWidth - tableWidth) / 2;
-    const startY = yPos + 40;
+        doc.setFontSize(16);
+        doc.text(text, 14, 40);
+        //Getting Current Date
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+        const day = String(currentDate.getDate()).padStart(2, "0");
 
-    doc.autoTable({
-      head: [tableHeaders],
-      body: tableData,
+        const formattedDate = `${day}-${month}-${year}`;
+        doc.text(formattedDate, 167, 40);
 
-      // columnStyles: {
-      //   0: { cellWidth: 30 },
-      //   1: { cellWidth: 30 },
-      //   2: { cellWidth: 40 },
-      //   3: { cellWidth: 40 },
-      //   4: { cellWidth: 40 },
-      //   5: { cellWidth: 20 },
-      // },
-      startY: startY,
-      startX: startX,
-    });
+        //table design
+        const tableWidth = 180;
+        const startX = (pageWidth - tableWidth) / 2;
+        const startY = yPos + 40;
 
-    const tableHeadersHeight = 10; // Height of the table headers
-    const tableRowHeight = 12; // Height of each table row
-    const tableDataHeight = tableData.length * tableRowHeight;
-    const tableTotalHeight = tableHeadersHeight + tableDataHeight;
-    const tableEndY = startY + tableTotalHeight;
-    const textX = startX;
-    const textY = tableEndY + 10;
-    const warningTextFontSize = 10;
-    const webLink = "https://fabplexiorders.netlify.app";
-    const warningText =
-      "This is Electronically generated PDF Please Review orders Carefully ";
-    doc.setFontSize(warningTextFontSize);
-    doc.text(warningText, textX, textY);
-    doc.setFontSize(warningTextFontSize);
+        doc.autoTable({
+          head: [tableHeaders],
+          body: tableData,
+          startY: startY,
+          startX: startX,
+        });
 
-    doc.text(webLink, textX, textY + 5);
-    doc.save("plexiorders " + formattedDate);
+        const tableHeadersHeight = 10; // Height of the table headers
+        const tableRowHeight = 12; // Height of each table row
+        const tableDataHeight = tableData.length * tableRowHeight;
+        const tableTotalHeight = tableHeadersHeight + tableDataHeight;
+        const tableEndY = startY + tableTotalHeight;
+        const textX = startX;
+        const textY = tableEndY + 10;
+        const warningTextFontSize = 10;
+        const webLink = "https://fabplexiorders.netlify.app";
+        const warningText =
+          "This is Electronically generated PDF. Please review orders carefully.";
+        doc.setFontSize(warningTextFontSize);
+        doc.text(warningText, textX, textY);
+        doc.setFontSize(warningTextFontSize);
+
+        doc.text(webLink, textX, textY + 5);
+        doc.save("plexiorders " + formattedDate);
+      })
+      .catch((error) => {
+        // Handle any errors that occur during the Promise execution
+        console.error(error);
+      });
   };
-
   // DeleteORder
   const notify2 = () => toast.success("Order Deleted Sucessfully.");
   const notify3 = () => toast.error("Failed To Delete Order");
