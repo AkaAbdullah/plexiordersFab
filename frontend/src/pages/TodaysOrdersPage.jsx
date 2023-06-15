@@ -648,7 +648,7 @@ export const TodaysOrdersPage = () => {
         </Button>
       </div>
       <div className="lfooter">
-        <h4> Fab Glass and Mirror &copy;</h4>
+        <h4> Not Fab Glass and Mirror &copy;</h4>
       </div>
     </>
   );
