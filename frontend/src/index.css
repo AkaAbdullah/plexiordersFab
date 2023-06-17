@@ -149,6 +149,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  bottom: 0;
 }
 .navi {
   background-color: rgb(182, 103, 206);
