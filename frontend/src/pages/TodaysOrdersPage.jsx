@@ -100,9 +100,16 @@ export const TodaysOrdersPage = () => {
   };
 
   const handleInputFields = (e) => {
+    let value = e.target.value;
+
+    if (e.target.name === "tracking") {
+      // Remove spaces from the tracking field
+      value = value.replace(/\s/g, "");
+    }
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: value,
     });
   };
 
