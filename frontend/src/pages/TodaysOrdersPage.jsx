@@ -406,55 +406,6 @@ export const TodaysOrdersPage = () => {
               <div className="updateDiv">
                 <form className="updateForm" onSubmit={handleSubmit}>
                   <TextField
-                    name="orderNo"
-                    size="small"
-                    label={placeholders.orderNo}
-                    variant="outlined"
-                    onChange={handleInputFields}
-                  />
-                  <TextField
-                    name="marketPlaceOrderID"
-                    size="small"
-                    label="Market Place Order ID"
-                    variant="outlined"
-                    onChange={handleInputFields}
-                  />
-                  <TextField
-                    name="thickness"
-                    size="small"
-                    label={`Thickness ${placeholders.thickness}`}
-                    variant="outlined"
-                    onChange={handleInputFields}
-                  />
-                  <TextField
-                    name="lengthAndFractonValue"
-                    size="small"
-                    label={`Length and Fraction Value ${placeholders.lengthAndFractonValue}`}
-                    variant="outlined"
-                    onChange={handleInputFields}
-                  />
-                  <TextField
-                    name="widthAndFractionValue"
-                    size="small"
-                    label={`Width and Fraction Value ${placeholders.widthAndFractionValue}`}
-                    variant="outlined"
-                    onChange={handleInputFields}
-                  />
-                  <TextField
-                    name="diameterAndFractionValue"
-                    size="small"
-                    label={`Diameter and Fraction Value ${placeholders.diameterAndFractionValue}`}
-                    variant="outlined"
-                    onChange={handleInputFields}
-                  />
-                  <TextField
-                    name="quantity"
-                    size="small"
-                    label={`Quantity  ${placeholders.quantity}`}
-                    variant="outlined"
-                    onChange={handleInputFields}
-                  />
-                  <TextField
                     name="price"
                     size="small"
                     label={`Price  ${placeholders.price}`}
@@ -601,9 +552,7 @@ export const TodaysOrdersPage = () => {
                     >
                       View
                     </Button>
-                    <Button color="success" size="small" variant="outlined">
-                      Mark Complete
-                    </Button>
+
                     <Button
                       onClick={() => handleUpdateModal(order._id)}
                       size="small"
