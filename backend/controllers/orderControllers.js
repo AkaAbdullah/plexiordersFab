@@ -139,8 +139,6 @@ const createMultipleOrders = async (req, res) => {
 //Delete order
 const deleteOrder = async (req, res) => {
   try {
-    // Perform deletion logic here
-    // Assuming you have a database and the order to be deleted is identified by req.params.id
     const deletedOrder = await Orders.findByIdAndDelete(req.params.id);
 
     if (deletedOrder) {
