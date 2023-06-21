@@ -39,24 +39,24 @@ export const AddNewOrdersPage = () => {
   const notify = () => toast.success("Order Saved.");
   //Accesiig fom values
 
-const handleInputFields = (event) => {
-  const { name, value } = event.target;
-  let convertedValue = value;
+  const handleInputFields = (event) => {
+    const { name, value } = event.target;
+    let convertedValue = value;
 
-  // Check if the input field is one of the fraction fields
-  if (
-    name === 'lengthAndFractonValue' ||
-    name === 'widthAndFractionValue' ||
-    name === 'diameterAndFractionValue'
-  ) {
-    // Check if the value is repeated
-    if (value.startsWith(convertedValue.split(' ')[0])) {
-      const [whole] = convertedValue.split(' ');
-      convertedValue = whole;
-    } else {
+    // Check if the input field is one of the fraction fields
+    if (
+      name === 'lengthAndFractonValue' ||
+      name === 'widthAndFractionValue' ||
+      name === 'diameterAndFractionValue'
+    ) {
       convertedValue = convertFractionToDecimal(value);
     }
-  }
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: convertedValue,
+    }));
+  };
 
   setFormData((prevFormData) => ({
     ...prevFormData,
