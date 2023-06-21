@@ -16,10 +16,11 @@ function convertFractionToDecimal(fraction) {
 
   const decimal = Number(numerator) / Number(denominator);
   const decimalString = decimal.toFixed(3);
-  const formattedDecimal = `${whole} ${fraction} ${decimalString.slice(1)}`;
+  const formattedDecimal = `  ${fraction} Decimal Value = ${decimalString.slice(
+    1
+  )}`;
   return formattedDecimal;
 }
-
 
 export const AddNewOrdersPage = () => {
   const [formData, setFormData] = useState({
@@ -39,15 +40,15 @@ export const AddNewOrdersPage = () => {
   const notify = () => toast.success("Order Saved.");
   //Accesiig fom values
 
-const handleInputFields = (event) => {
+  const handleInputFields = (event) => {
     const { name, value } = event.target;
     let convertedValue = value;
 
     // Check if the input field is one of the fraction fields
     if (
-      name === 'lengthAndFractonValue' ||
-      name === 'widthAndFractionValue' ||
-      name === 'diameterAndFractionValue'
+      name === "lengthAndFractonValue" ||
+      name === "widthAndFractionValue" ||
+      name === "diameterAndFractionValue"
     ) {
       convertedValue = convertFractionToDecimal(value);
     }
@@ -57,7 +58,6 @@ const handleInputFields = (event) => {
       [name]: convertedValue,
     }));
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
