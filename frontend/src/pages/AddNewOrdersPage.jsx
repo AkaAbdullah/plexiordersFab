@@ -9,11 +9,6 @@ import NavBar from "../components/NavBar";
 
 
 
-function convertFractionToDecimal(fraction) {
-  const [whole, numerator, denominator] = fraction.split(/\s+|\/+/);
-  const decimal = Number(whole) + Number(numerator) / Number(denominator);
-  return decimal.toFixed(2); // Adjust the decimal places as needed
-}
 
 
 export const AddNewOrdersPage = () => {
@@ -35,23 +30,27 @@ export const AddNewOrdersPage = () => {
   //Accesiig fom values
 
    const handleInputFields = (event) => {
-    const { name, value } = event.target;
-    let convertedValue = value;
+   // Check if the value contains a fraction
+  if (value.includes('/')) {
+    const [wholeNumber, fraction] = value.split(' ');
+    const [numerator, denominator] = fraction.split('/');
 
-    // Check if the input field is one of the fraction fields
-    if (
-      name === "lengthAndFractonValue" ||
-      name === "widthAndFractionValue" ||
-      name === "diameterAndFractionValue"
-    ) {
-      convertedValue = convertFractionToDecimal(value);
-    }
+    // Convert the fraction to a decimal value and limit it to three digits
+    const decimalValue = (parseInt(numerator, 10) / parseInt(denominator, 10)).toFixed(3);
 
+    // Update the form data state with the formatted value
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: convertedValue,
+      [name]: `${wholeNumber}  ${decimalValue}`,
     }));
-  };
+  } else {
+    // If the value doesn't contain a fraction, update the form data state as usual
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  }
+};
 
 
   const handleSubmit = (e) => {
