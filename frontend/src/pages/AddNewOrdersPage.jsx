@@ -7,6 +7,19 @@ import Backdrop from "@mui/material/Backdrop";
 import toast, { Toaster } from "react-hot-toast";
 import NavBar from "../components/NavBar";
 
+
+function convertFractionToDecimal(fraction) {
+  if (fraction.startsWith("/")) {
+    const denominator = fraction.substring(1);
+    const decimal = 1 / Number(denominator);
+    return decimal.toFixed(3); // Adjust the decimal places as needed
+  }
+
+  const [whole, numerator, denominator] = fraction.split(/\s+|\/+/);
+  const decimal = Number(whole) + Number(numerator) / Number(denominator);
+  return decimal.toFixed(3); // Adjust the decimal places as needed
+}
+
 export const AddNewOrdersPage = () => {
   const [formData, setFormData] = useState({
     orderNo: "",
@@ -25,12 +38,28 @@ export const AddNewOrdersPage = () => {
   const notify = () => toast.success("Order Saved.");
   //Accesiig fom values
 
-  const handleInputFields = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+   const handleInputFields = (event) => {
+    const { name, value } = event.target;
+    let convertedValue = value;
+
+    if (name === "thickness") {
+      convertedValue = convertFractionToDecimal(value);
+    } else if (
+      name === "lengthAndFractonValue" ||
+      name === "widthAndFractionValue" ||
+      name === "diameterAndFractionValue"
+    ) {
+      convertedValue = convertFractionToDecimal(value);
+    }
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: convertedValue,
+    }));
   };
+
+  // Rest of your component code...
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
