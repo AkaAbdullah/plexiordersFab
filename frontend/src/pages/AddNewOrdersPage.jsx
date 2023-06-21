@@ -58,8 +58,6 @@ export const AddNewOrdersPage = () => {
     }));
   };
 
-  // Rest of your component code...
-};
 
   const handleSubmit = (e) => {
     e.preventDefault();
