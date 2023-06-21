@@ -15,12 +15,12 @@ function convertFractionToDecimal(fraction) {
     return fraction; // Return the whole number as is
   }
 
-  const decimal = Number(whole) + Number(numerator) / Number(denominator);
+  const decimal = Number(numerator) / Number(denominator);
   const decimalString = decimal.toFixed(3);
-  const [integerPart, fractionalPart] = decimalString.split('.');
-  const formattedDecimal = `${integerPart} ${fraction} ${fractionalPart}`;
+  const formattedDecimal = `${whole} ${fraction} ${decimalString}`;
   return formattedDecimal;
 }
+
 export const AddNewOrdersPage = () => {
   const [formData, setFormData] = useState({
     orderNo: "",
