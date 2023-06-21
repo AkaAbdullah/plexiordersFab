@@ -7,7 +7,6 @@ import Backdrop from "@mui/material/Backdrop";
 import toast, { Toaster } from "react-hot-toast";
 import NavBar from "../components/NavBar";
 
-
 function convertFractionToDecimal(fraction) {
   const [whole, numerator, denominator] = fraction.split(/\s+|\/+/);
 
@@ -20,6 +19,8 @@ function convertFractionToDecimal(fraction) {
   const formattedDecimal = `${whole} ${fraction} ${decimalString.slice(1)}`;
   return formattedDecimal;
 }
+
+
 export const AddNewOrdersPage = () => {
   const [formData, setFormData] = useState({
     orderNo: "",
@@ -122,6 +123,7 @@ export const AddNewOrdersPage = () => {
             label="Order No"
             variant="outlined"
             onChange={handleInputFields}
+            autoFocus
           />
           <TextField
             name="marketPlaceOrderID"
