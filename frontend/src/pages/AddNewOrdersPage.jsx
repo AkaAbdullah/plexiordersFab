@@ -18,10 +18,9 @@ function convertFractionToDecimal(fraction) {
   const decimal = Number(whole) + Number(numerator) / Number(denominator);
   const decimalString = decimal.toFixed(3);
   const [integerPart, fractionalPart] = decimalString.split('.');
-  const formattedDecimal = `${integerPart} .${fractionalPart}`;
+  const formattedDecimal = `${integerPart} ${fraction} ${fractionalPart}`;
   return formattedDecimal;
 }
-
 export const AddNewOrdersPage = () => {
   const [formData, setFormData] = useState({
     orderNo: "",
@@ -40,7 +39,7 @@ export const AddNewOrdersPage = () => {
   const notify = () => toast.success("Order Saved.");
   //Accesiig fom values
 
-  const handleInputFields = (event) => {
+ const handleInputFields = (event) => {
     const { name, value } = event.target;
     let convertedValue = value;
 
