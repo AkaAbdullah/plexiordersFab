@@ -10,6 +10,11 @@ import NavBar from "../components/NavBar";
 
 function convertFractionToDecimal(fraction) {
   const [whole, numerator, denominator] = fraction.split(/\s+|\/+/);
+
+  if (!numerator || !denominator) {
+    return fraction; // Return the whole number as is
+  }
+
   const decimal = Number(whole) + Number(numerator) / Number(denominator);
   const decimalString = decimal.toFixed(3);
   const [integerPart, fractionalPart] = decimalString.split('.');
@@ -35,7 +40,7 @@ export const AddNewOrdersPage = () => {
   const notify = () => toast.success("Order Saved.");
   //Accesiig fom values
 
-   const handleInputFields = (event) => {
+  const handleInputFields = (event) => {
     const { name, value } = event.target;
     let convertedValue = value;
 
