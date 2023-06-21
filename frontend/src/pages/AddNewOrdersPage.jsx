@@ -12,7 +12,7 @@ import NavBar from "../components/NavBar";
 function convertFractionToDecimal(fraction) {
   const [whole, numerator, denominator] = fraction.split(/\s+|\/+/);
   const decimal = Number(whole) + Number(numerator) / Number(denominator);
-  return decimal.toFixed(2); // Adjust the decimal places as needed
+  return decimal.toFixed(3); // Adjust the decimal places as needed
 }
 
 export const AddNewOrdersPage = () => {
