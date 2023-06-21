@@ -39,7 +39,7 @@ export const AddNewOrdersPage = () => {
   const notify = () => toast.success("Order Saved.");
   //Accesiig fom values
 
-  const handleInputFields = (event) => {
+const handleInputFields = (event) => {
     const { name, value } = event.target;
     let convertedValue = value;
 
@@ -57,13 +57,6 @@ export const AddNewOrdersPage = () => {
       [name]: convertedValue,
     }));
   };
-
-  setFormData((prevFormData) => ({
-    ...prevFormData,
-    [name]: convertedValue,
-  }));
-};
-
 
 
   const handleSubmit = (e) => {
