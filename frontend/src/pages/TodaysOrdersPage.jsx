@@ -337,14 +337,6 @@ export const TodaysOrdersPage = () => {
       body: tableData,
       startY: startY,
       startX: startX,
-      columnStyles: {
-        0: { cellWidth: 30 }, // Modify the width of the first column (Order No)
-        1: { cellWidth: 30 }, // Modify the width of the second column (Thickness)
-        2: { cellWidth: 60 }, // Modify the width of the third column (Length & Fr Value)
-        3: { cellWidth: 60 }, // Modify the width of the fourth column (Width & Fr Value)
-        4: { cellWidth: 30 }, // Modify the width of the fifth column (Diameter & Fr Value)
-        5: { cellWidth: 30 }, // Modify the width of the sixth column (Quantity)
-      },
     });
 
     const tableHeadersHeight = 10; // Height of the table headers
