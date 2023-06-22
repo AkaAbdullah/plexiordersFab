@@ -16,9 +16,7 @@ function convertFractionToDecimal(fraction) {
 
   const decimal = Number(numerator) / Number(denominator);
   const decimalString = decimal.toFixed(3);
-  const formattedDecimal = `  ${fraction} Decimal Value = ${decimalString.slice(
-    1
-  )}`;
+  const formattedDecimal = `  ${fraction} DValue = ${decimalString.slice(1)}`;
   return formattedDecimal;
 }
 
