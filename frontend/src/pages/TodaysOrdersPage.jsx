@@ -409,6 +409,7 @@ export const TodaysOrdersPage = () => {
                     size="small"
                     label={`Price  ${placeholders.price}`}
                     variant="outlined"
+                    autoFocus
                     onChange={handleInputFields}
                   />
                   <TextField
